@@ -12,6 +12,20 @@ const userSchema = new Schema({
      password:{
         type:String,
         required:true
-    }
+    },
+    otp:{
+           type:String,
+        required:true
+    },
+    otpExpiry: {
+        type: Date,
+    },
+     refreshtoken :{
+           type:String,
+        required:true
+    },   
+  
     
 })
+
+export const User = mongoose.model("User" , userSchema)
