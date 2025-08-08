@@ -13,8 +13,15 @@ const registerUser = asyncHandler(async(req , res)=>{
         throw new ApiError(401 , "all feilds are required")
     }
      
+    const existedUser = await User.findOne({
+        $or:[{name}, {email}]
+    })
+
+    if (existedUser) {
+        throw new ApiError(400 , "user already exist")
+    }
      
-    const user = User.create({
+    const user = await User.create({
         name,
         email,
         password
@@ -26,7 +33,7 @@ const registerUser = asyncHandler(async(req , res)=>{
         throw new ApiError(402 , "something went wrong while creating user")
     }
 
-    return res.status(200).json(ApiResponse(200 , createdUser , "user registered successfully"))
+    return res.status(200).json(new ApiResponse(200 , createdUser, "user registered successfully"))
 
 })
 
