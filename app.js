@@ -2,6 +2,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors"
 import { urlencoded } from "express";
+import Userrouter from "./src/routes/user.route";
 
 const app = express()
 
@@ -20,9 +21,8 @@ app.use(express.static("public"))
 
 //routes
 
-app.get("/"  , async (req , res)=>{
-   res.send("hello WAITING")
-})
+
+app.use("/api/v1/users" , Userrouter)
 
 
 
