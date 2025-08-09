@@ -59,5 +59,19 @@ const listProduct = asyncHandler(async(req, res)=>{
 
 })
 
+const removiingProduct = asyncHandler(async(req ,res)=>{
+      
+    const {id} = req.params
 
-export{addProduct, listProduct}
+   const deletedproduct =  await Product.findByIdAndDelete(id)
+
+    if (!deletedproduct) {
+        throw new ApiError(401 , "product not found")
+    }
+
+
+      return res.status(200).json(new ApiResponse(200 , deletedproduct , "successfully deleted the product") )
+})
+
+
+export{addProduct, listProduct , removiingProduct}
