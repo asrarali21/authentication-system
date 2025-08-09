@@ -1,4 +1,6 @@
+import { Product } from "../models/product.model.js";
 import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadoncloudinary } from "../utils/cloudinary.js";
 
@@ -8,13 +10,9 @@ const addProduct = asyncHandler(async(req ,res)=>{
         const {name , description , price , category , subcategory , sizes, bestSeller} = req.body
 
 
-        if ([name , description , price , category , subcategory , sizes, bestSeller].some((item)=>item.trim() === "")) {
-            throw new ApiError(401 , "all fields are required")
-        }
-
 
         const imagesLocalpath = req.files.map(file=>file.path)
-
+        console.log(req.files);
         console.log(imagesLocalpath);
         
 
@@ -23,18 +21,34 @@ const addProduct = asyncHandler(async(req ,res)=>{
    const results = await Promise.all(
       imagesLocalpath.map(path=> uploadoncloudinary(path))
    )
+   console.log(results);
    
+   // we can have secure url for production
    const imageUrls = results.map(file => file.url)
 
-
-     
-
+   console.log(imageUrls);
 
 
+   const product  = await Product.create({
+    name,
+    description,
+    price,
+    category,
+    subcategory,
+    sizes,
+    bestSeller,
+    image : imageUrls
+   })
+   
 
-
+     return res.status(200)
+     .json(new ApiResponse(200 , product , "successfully added product"))
 
 })
+
+
+
+
 
 
 export{addProduct}
