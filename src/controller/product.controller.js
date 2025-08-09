@@ -73,5 +73,18 @@ const removiingProduct = asyncHandler(async(req ,res)=>{
       return res.status(200).json(new ApiResponse(200 , deletedproduct , "successfully deleted the product") )
 })
 
+const singleproduct = asyncHandler (async(req , res)=>{
+    const {id} = req.params
 
-export{addProduct, listProduct , removiingProduct}
+    const singleproduct = await Product.findById(id)
+
+    if (!singleproduct) {
+       throw new ApiError(401 , "couldnt find product")
+    }
+  
+
+    res.status(200).json(new ApiResponse(200 , singleproduct , "successfully got single product"))
+
+
+})
+export{addProduct, listProduct , removiingProduct , singleproduct}
