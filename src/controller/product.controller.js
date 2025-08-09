@@ -47,8 +47,17 @@ const addProduct = asyncHandler(async(req ,res)=>{
 })
 
 
+const listProduct = asyncHandler(async(req, res)=>{
+        
+    const allproducts = await Product.find()
+
+    if (!allproducts) {
+        throw new ApiError(401 , "no products found")
+    }
+
+    res.status(200).json(new ApiResponse(200 , allproducts , "successfully got all the products"))
+
+})
 
 
-
-
-export{addProduct}
+export{addProduct, listProduct}
