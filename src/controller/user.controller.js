@@ -2,7 +2,7 @@ import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-
+import jwt from "jsonwebtoken"
 
 
 
@@ -87,4 +87,32 @@ const logoutUser = asyncHandler (async(req ,res)=>{
     .json(new ApiResponse(200 , {} , "user logout successfully"))
 })
 
-export{registerUser , loginUser , logoutUser}
+
+const adminLogin = asyncHandler(async(req, res)=>{
+    const {email, password} = req.body
+
+    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+        const accessToken = jwt.sign
+        (
+            {role:"admin"},
+           process.env.ACCESS_TOKEN_SECRET,
+           {expiresIn:process.env.ACCESS_TOKEN_EXPIRY}
+        );
+         const refreshToken = jwt.sign
+        (
+            {role:"admin"},
+           process.env.REFRESH_TOKEN_SECRET,
+           {expiresIn:process.env.REFRESH_TOKEN_EXPIRY}
+        )
+
+       const options = {
+             httpOnly: true, 
+             secure: true
+        }
+        res
+        .cookie("accessToken" , accessToken , options )
+        .cookie("refreshToken" , refreshToken , options)
+        .json(new ApiResponse(200 , "admin login successfully"))
+    }
+})
+export{registerUser , loginUser , logoutUser ,adminLogin}
