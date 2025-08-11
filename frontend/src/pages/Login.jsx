@@ -1,6 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
+    const navigate = useNavigate()
+    function handleregisterclick() {
+        navigate("/register")
+    }
   return (
     <div>
 
@@ -44,7 +49,7 @@ function Login() {
             <button type="submit" class="mt-8 w-full h-11 rounded-full text-white bg-indigo-500 hover:opacity-90 transition-opacity">
                 Login
             </button>
-            <p class="text-gray-500/90 text-sm mt-4">Don’t have an account? <a class="text-indigo-400 hover:underline" href="#">Sign up</a></p>
+            <p class="text-gray-500/90 text-sm mt-4" onClick={handleregisterclick}>Don’t have an account? <a class="text-indigo-400 hover:underline" href="">Sign up</a></p>
         </form>
     </div>
 </div>
