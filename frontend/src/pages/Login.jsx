@@ -2,24 +2,23 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { handleError, handlesuccess } from '@/util'
+import { useSetRecoilState } from 'recoil'
+import { authState } from '../../authAtom';
 
 function Login() {
     const navigate = useNavigate()
-
 
     function handleregisterclick() {
         navigate("/register")
     }
 
-
   const [logininfo, setLogininfo] = useState({
   email: "",
   password: ""
 });
-
 console.log(logininfo);
 
-
+const setAuth = useSetRecoilState(authState)
   
    async function handleformsubmit(e) {
       e.preventDefault();
@@ -31,8 +30,14 @@ console.log(logininfo);
      const response =  await  axios.post("http://localhost:8000/api/v1/users/loginUser" , logininfo ,{
    withCredentials: true
     })
-    console.log(response.data.message);
+    console.log(response.data.data);
     handlesuccess(response.data.message)
+    setAuth({
+        isLoggedIn:true,
+        userdata:response.data.data
+    })
+  
+    
      setTimeout(()=>{
       setLogininfo({  email: "", password: "" });
        navigate("/")

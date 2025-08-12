@@ -1,14 +1,35 @@
 import React from 'react'
 import { Button } from './ui/button'
 import {  NavLink, useNavigate } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import { authState } from '../../authAtom'
+import axios from 'axios'
+import { handleError, handlesuccess } from '@/util'
 
 function Navbar() {
+
+    const [auth , setAuth]  = useRecoilState(authState)
+
     const navigate = useNavigate()
   function handleclick() {
      navigate("/login")
      console.log("button is clicked");
-     
   }
+
+  async function handlelogout() {
+       try {
+         const response = await axios.post("http://localhost:8000/api/v1/users/logoutUser")
+         console.log(response);
+         setTimeout(()=>{
+            handlesuccess(response.data.message)
+            setAuth({ isLoggedIn: false, user: null });
+            navigate("/login")
+         } , 1000)
+      
+       } catch (error) {
+          handleError(error)
+       }
+   }
   return (
     <div>
 <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -41,7 +62,7 @@ function Navbar() {
         </li>
       </ul>
     </div>
-      <Button onClick={handleclick}>login</Button>
+      <Button onClick={auth.isLoggedIn ? handlelogout :handleclick}>{auth.isLoggedIn? "logout" : "login" }</Button>
   </div>
 </nav>
 
