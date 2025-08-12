@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { handleError, handlesuccess } from '@/util'
 import { useSetRecoilState } from 'recoil'
-import { authState } from '../../authAtom';
+import { authState } from '../store/atoms/authAtom';
 
 function Login() {
     const navigate = useNavigate()

@@ -29,7 +29,7 @@ console.log(formData);
     try {
      const response =  await  axios.post("http://localhost:8000/api/v1/users/registerUser" , formData ,{
    withCredentials: true
-    })
+    })  
     console.log(response.data.message);
     handlesuccess(response.data.message)
      setTimeout(()=>{
@@ -37,9 +37,10 @@ console.log(formData);
        navigate("/login")
     }, 1500)
  
+ 
     } catch (error) {
-    handleError(error)
-    console.log(error);
+    handleError(error.response.data.message)
+    console.log(error.response.data.message);
     
      }
 
