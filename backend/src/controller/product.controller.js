@@ -7,7 +7,7 @@ import { uploadoncloudinary } from "../utils/cloudinary.js";
 
 
 const addProduct = asyncHandler(async(req ,res)=>{
-        const {name , description , price , category , subcategory , sizes, bestSeller} = req.body
+        const {name , description , price , category , bestSeller} = req.body
 
 
 
@@ -34,8 +34,6 @@ const addProduct = asyncHandler(async(req ,res)=>{
     description,
     price,
     category,
-    subcategory,
-    sizes,
     bestSeller,
     image : imageUrls
    })

@@ -9,7 +9,7 @@ const Productroute = Router()
 
 
 
-Productroute.route("/addproduct").post(verifyadmin,upload.array("image" , 5), addProduct)
+Productroute.route("/addproduct").post(upload.array("images" , 5),verifyadmin , addProduct)
 Productroute.route("/productlist").get(listProduct)
 Productroute.route("/deleteproduct/:id").delete(verifyadmin,removiingProduct)
 Productroute.route("/singleproduct/:id").get(singleproduct)

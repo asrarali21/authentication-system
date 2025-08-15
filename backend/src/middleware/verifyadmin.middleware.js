@@ -5,8 +5,10 @@ import jwt from "jsonwebtoken"
 
 const verifyadmin = asyncHandler (async(req , res , next)=>{
   try {
-      const token = req.cookies?.accessToken || req.header("authorization")?.replace("Bearer", "");
-  
+ 
+    const token = req.cookies?.accessToken || req.header("authorization")?.replace("Bearer ", "").trim();
+
+
       if (!token) {
           throw new ApiError(401 , "unauthorized access")
       }

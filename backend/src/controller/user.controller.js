@@ -14,7 +14,7 @@ const registerUser = asyncHandler(async(req , res)=>{
     }
      
     const existedUser = await User.findOne({
-        $or:[{name}, {email}]
+        $or:[{email}]
     })
 
     if (existedUser) {
@@ -105,14 +105,14 @@ const adminLogin = asyncHandler(async(req, res)=>{
            {expiresIn:process.env.REFRESH_TOKEN_EXPIRY}
         )
 
-       const options = {
-             httpOnly: true, 
-             secure: true
-        }
+      const options = {
+  httpOnly: true,
+  secure: true,     
+}
         res
         .cookie("accessToken" , accessToken , options )
         .cookie("refreshToken" , refreshToken , options)
-        .json(new ApiResponse(200 , "admin login successfully"))
+        .json(new ApiResponse(200 ,  "admin login successfully"))
     }
 })
 export{registerUser , loginUser , logoutUser ,adminLogin}
