@@ -22,10 +22,12 @@ function Products() {
   
   const [images, setImages] = useState([]);
 
-  const handleImages = (e)=>{
-    const files = Array.from(e.target.files || [])
-        if (!files.length) return;
-         setImages((prev) => [...prev, ...files]);
+  const handleImages = (e) => {
+    const files = Array.from(e.target.files || []);
+    console.log('selected files:', files.map(f => f.name));
+    if (!files.length) return;
+    setImages(prev => [...prev, ...files]);
+    e.target.value = ""; // allow picking the same file again
   }
 
   const handleSubmit = async (e) => {
@@ -34,14 +36,19 @@ function Products() {
     const formdata = new FormData();
     Object.entries(productdata).forEach(([k,v])=>formdata.append(k , String(v)))
     images.forEach((file)=> formdata.append('images' , file))
-      await axios.post("http://localhost:8000/api/v1/products/addproduct", formdata 
+
+
+    const res =  await axios.post("http://localhost:8000/api/v1/products/addproduct", formdata , { withCredentials: true }
         );
+          console.log('upload response:', res.status, res.data);
       // ...success handling...
 
      
       
     } catch (error) {
       // ...error handling...
+      console.log(error);
+      
     }
   };
   
@@ -78,15 +85,45 @@ function Products() {
                     <label className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors">
                       <Upload className="h-4 w-4 mr-2" />
                       Browse Files
-                      <input 
-                      type="file" 
-                      accept="image/*" 
-                      multiple
-                      onChange={handleImages}
-                      className="hidden" />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleImages}
+                        className="hidden"
+                      />
                     </label>
+                    {images.length > 0 && (
+                      <p className="text-xs text-gray-500 mt-3">{images.length} file(s) selected</p>
+                    )}
                   </div>
                 </div>
+
+                {/* Preview grid */}
+                {images.length > 0 && (
+                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {images.map((file, idx) => {
+                      const url = URL.createObjectURL(file);
+                      return (
+                        <div key={idx} className="relative group">
+                          <img
+                            src={url}
+                            alt={file.name}
+                            className="h-28 w-full object-cover rounded-lg border border-gray-200"
+                            onLoad={() => URL.revokeObjectURL(url)}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setImages(arr => arr.filter((_, i) => i !== idx))}
+                            className="absolute top-2 right-2 px-2 py-1 text-xs bg-white/90 border border-gray-300 rounded-md shadow hover:bg-white"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               {/* Right Columns - Form Fields */}
