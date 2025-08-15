@@ -1,5 +1,18 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
+import { 
+  LayoutDashboard, 
+  Package, 
+  ShoppingCart, 
+  Users, 
+  Settings, 
+  BarChart3, 
+  Search, 
+  Bell, 
+  ChevronDown, 
 
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 function Adminlayout() {
   return (
      <div className="min-h-screen bg-gray-50 flex">
@@ -16,11 +29,11 @@ function Adminlayout() {
         
         <nav className="px-4 pb-6">
           <div className="space-y-2">
-            <Link to="#" className="flex items-center space-x-3 px-3 py-2 bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100">
+            <Link to="." className="flex items-center space-x-3 px-3 py-2">
               <LayoutDashboard className="w-5 h-5" />
-              <span className="font-medium">Dashboard</span>
+              <span className="">Dashboard</span>
             </Link>
-            <Link to="/addproduct" className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors">
+            <Link to="products" className="flex items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors">
               <Package className="w-5 h-5" />
               <span>Products</span>
             </Link>
@@ -43,10 +56,14 @@ function Adminlayout() {
           </div>
         </nav>
       </div>
+ <div className="flex-1 flex flex-col">
+      
 
       <div className="flex-1 flex flex-col">
         <Outlet />       {/* main content changes here */}
       </div>
+      
+    </div>
     </div>
   )
 }
