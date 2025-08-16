@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 
 import axios from "axios"
+import { handleError, handlesuccess } from '../toast.utils';
 
 function Products() {
   const [productdata, setproductdata] = useState({
@@ -40,14 +41,25 @@ function Products() {
 
     const res =  await axios.post("http://localhost:8000/api/v1/products/addproduct", formdata , { withCredentials: true }
         );
+        console.log(res);
+        
           console.log('upload response:', res.status, res.data);
-      // ...success handling...
-
-     
+       handlesuccess(res.data.message)
+        setproductdata({
+            name: '', 
+            category: '', 
+            price: '', 
+            bestSeller: true, 
+            description: ''
+        });
+        setImages([]);
+        
       
     } catch (error) {
       // ...error handling...
-      console.log(error);
+       console.log(error.response.data.message);
+       
+      handleError(error.response.data.message)
       
     }
   };

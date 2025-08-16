@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { 
   LayoutDashboard, 
   Package, 
@@ -13,7 +13,14 @@ import {
 
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import axios from "axios"
 function Adminlayout() {
+   const navigate = useNavigate()
+   async function handlelogout() {
+        const res  =   await  axios.post("http://localhost:8000/api/v1/users/adminlogout")
+        console.log(res);
+        navigate("/")
+    }
   return (
      <div className="min-h-screen bg-gray-50 flex">
              {/* left sidebar - stays mounted */}
@@ -53,6 +60,7 @@ function Adminlayout() {
               <Settings className="w-5 h-5" />
               <span>Settings</span>
             </Link>
+            <button className='bg-indigo-400 ' onClick={handlelogout}>logout</button>
           </div>
         </nav>
       </div>
