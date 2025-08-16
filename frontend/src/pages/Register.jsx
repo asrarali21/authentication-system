@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { handleError, handlesuccess } from '@/util';
+import { handleError, handlesuccess } from '../toast.util';
 
 function Register() {
 
