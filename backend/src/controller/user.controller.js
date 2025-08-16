@@ -105,9 +105,11 @@ const adminLogin = asyncHandler(async(req, res)=>{
            {expiresIn:process.env.REFRESH_TOKEN_EXPIRY}
         )
 
-      const options = {
+ const options = {
   httpOnly: true,
-  secure: true,     
+  secure: false,     // false on localhost
+  sameSite: 'lax',
+  path: '/',
 }
         res
         .cookie("accessToken" , accessToken , options )
@@ -115,4 +117,18 @@ const adminLogin = asyncHandler(async(req, res)=>{
         .json(new ApiResponse(200 ,  "admin login successfully"))
     }
 })
-export{registerUser , loginUser , logoutUser ,adminLogin}
+
+const adminlogout = asyncHandler(async(req , res) =>{
+
+          const options = {
+  httpOnly: true,
+  secure: true,     
+}
+    res.status(200)
+    .clearCookie("accessToken" ,options)
+    .clearCookie("refreshToken" ,options)
+    .json(new ApiResponse(200 , {} , "user logout sucessfully"))
+})
+
+
+export{registerUser , loginUser , logoutUser ,adminLogin , adminlogout}
