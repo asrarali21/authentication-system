@@ -8,29 +8,15 @@ import { Button } from '@/components/ui/button'
 
 function Electronics() {
      
-    const [products, setProducts] = useRecoilState(productstate)
+   const allproducts  = useRecoilValue(productstate)
+   const electronicsproduct = allproducts.filter(item => item.category.toLowerCase() === "electronics")
+   console.log(electronicsproduct);
    
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get("http://localhost:8000/api/v1/products/productlist")
-                setProducts(response.data.data) // Set the data in Recoil state
-                console.log("Fetched and stored products:", response.data.data)
-            } catch (error) {
-                console.error("Error fetching products:", error)
-            }
-        }
-        
-        // Only fetch if products array is empty
-        if (products.length === 0) {
-            fetchProducts()
-        }
-    }, [products.length, setProducts])
    
   return (
        <div className="container mx-auto px-4 py-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {products.map((item) => (
+                {electronicsproduct.map((item) => (
                     <Card 
                         key={item._id} 
                         className="group cursor-pointer border-0 shadow-sm hover:shadow-lg transition-all duration-300 bg-white max-w-sm"

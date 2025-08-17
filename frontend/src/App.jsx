@@ -8,6 +8,7 @@ import Navbar from './components/Navbar'
 import Register from './pages/register'
 import Products from './pages/Products'
 import Electronics from './pages/Electronics'
+import Fashion from './pages/Fashion'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
       <Route path='/electronics' element={<Electronics/>}/>
+      <Route path='/fashion' element={<Fashion/>}/>
     </Routes>
    </>
   )

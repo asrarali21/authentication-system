@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 function Products() {
    
     const allproducts = useRecoilValue(productstate)
-       console.log();
+       console.log(allproducts);
        
   return (
     <div className="container mx-auto px-4 py-8">
