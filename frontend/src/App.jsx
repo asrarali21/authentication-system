@@ -9,6 +9,7 @@ import Register from './pages/register'
 import Products from './pages/Products'
 import Electronics from './pages/Electronics'
 import Fashion from './pages/Fashion'
+import Sports from './pages/Sports'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Route path='/register' element={<Register/>}/>
       <Route path='/electronics' element={<Electronics/>}/>
       <Route path='/fashion' element={<Fashion/>}/>
+      <Route path='/sports' element={<Sports/>}/>
     </Routes>
    </>
   )

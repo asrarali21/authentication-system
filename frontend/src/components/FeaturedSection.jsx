@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from './ui/button'
+import weekHighlight from "../assets/weekhighlight.webp"
 function FeaturedSection() {
   return (
           <section className="py-20 bg-white">
@@ -29,7 +30,7 @@ function FeaturedSection() {
             </div>
             <div className="relative">
               <img
-                src="/placeholder-sox0s.png"
+                src={weekHighlight}
                 alt="Featured Products"
                 className="w-full h-auto rounded-lg shadow-lg"
               />

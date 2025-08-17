@@ -55,12 +55,6 @@ function Navbar() {
                             <Link to="/sports" className="text-stone-700 hover:text-stone-900 px-3 py-2 text-sm font-medium transition-colors">
                                 Sports
                             </Link>
-                            <Link to="/outdoors" className="text-stone-700 hover:text-stone-900 px-3 py-2 text-sm font-medium transition-colors">
-                                Outdoors
-                            </Link>
-                            <Link to="/beauty" className="text-stone-700 hover:text-stone-900 px-3 py-2 text-sm font-medium transition-colors">
-                                Beauty
-                            </Link>
                         </div>
                     </div>
 
