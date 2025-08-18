@@ -12,11 +12,14 @@ function Navbar() {
     const [showDropdown, setShowDropdown] = useState(false)
     const [showSearch, setShowSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
-   const [searchResults, setSearchResults] = useState([])
+    const [searchResults, setSearchResults] = useState([])
 
-   const allproducts = useRecoilValue(productstate)
+    const allproducts = useRecoilValue(productstate)
+    const navigate = useNavigate()
 
-     useEffect(() => {
+    
+
+    useEffect(() => {
         if (searchQuery.trim() === '') {
             setSearchResults([])
             return
@@ -29,17 +32,13 @@ function Navbar() {
         )
         setSearchResults(filteredproduct.slice(0, 8))
     }, [searchQuery, allproducts])
-      const handleSearchSelect = (item) => {
-        navigate(`/product/${item._id}`)
+
+    const handleSearchSelect = (item) => {
+        navigate(`/collection/${item._id}`)
         setShowSearch(false)
         setSearchQuery('')
         setSearchResults([])
     }
-
-
-    const navigate = useNavigate()
-
-
 
     function handleclick() {
         navigate("/login")
@@ -75,7 +74,7 @@ function Navbar() {
                     {/* Navigation Links - Centered OR Search Input */}
                     <div className="hidden md:block flex-1">
                         {showSearch ? (
-                            <>
+                            <div className="relative">
                                 {/* Search Input Field */}
                                 <div className="flex items-center justify-center">
                                     <div className="relative w-96">
@@ -92,6 +91,7 @@ function Navbar() {
                                             onClick={() => {
                                                 setShowSearch(false)
                                                 setSearchQuery('')
+                                                setSearchResults([])
                                             }}
                                             className="absolute right-3 top-1/2 transform -translate-y-1/2"
                                         >
@@ -99,35 +99,39 @@ function Navbar() {
                                         </button>
                                     </div>
                                 </div>
+
+                                {/* Search Results Dropdown - Positioned absolutely */}
                                 {searchResults.length > 0 && (
-                                    <div className="max-h-64 overflow-y-auto border-t border-stone-200">
-                                        {searchResults.map((item) => (
-                                            <div
-                                                key={item._id}
-                                                onClick={() => handleSearchSelect(item)}
-                                                className="flex items-center p-3 hover:bg-stone-50 cursor-pointer border-b border-stone-100 last:border-b-0"
-                                            >
-                                                <img
-                                                    src={item.image[0]}
-                                                    alt={item.name}
-                                                    className="w-10 h-10 object-cover rounded"
-                                                />
-                                                <div className="ml-3 flex-1">
-                                                    <div className="text-sm font-medium text-stone-900">
-                                                        {item.name}
+                                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-96 bg-white border border-stone-200 rounded-lg shadow-lg z-[60] mt-2">
+                                        <div className="max-h-64 overflow-y-auto">
+                                            {searchResults.map((item) => (
+                                                <div
+                                                    key={item._id}
+                                                    onClick={() => handleSearchSelect(item)}
+                                                    className="flex items-center p-3 hover:bg-stone-50 cursor-pointer border-b border-stone-100 last:border-b-0 first:rounded-t-lg last:rounded-b-lg"
+                                                >
+                                                    <img
+                                                        src={item.image[0]}
+                                                        alt={item.name}
+                                                        className="w-10 h-10 object-cover rounded"
+                                                    />
+                                                    <div className="ml-3 flex-1">
+                                                        <div className="text-sm font-medium text-stone-900">
+                                                            {item.name}
+                                                        </div>
+                                                        <div className="text-xs text-stone-500">
+                                                            {item.category}
+                                                        </div>
                                                     </div>
-                                                    <div className="text-xs text-stone-500">
-                                                        {item.category}
+                                                    <div className="text-sm font-semibold text-stone-900">
+                                                        ₹{item.price}
                                                     </div>
                                                 </div>
-                                                <div className="text-sm font-semibold text-stone-900">
-                                                    ₹{item.price}
-                                                </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
-                            </>
+                            </div>
                         ) : (
                             // Normal Navigation Links
                             <div className="flex items-center justify-center space-x-8">
@@ -254,11 +258,15 @@ function Navbar() {
                     </div>
                 </div>
 
-                {/* Click outside to close dropdown */}
-                {showDropdown && (
+                {/* Click outside to close dropdowns */}
+                {(showDropdown || showSearch) && (
                     <div 
-                        className="fixed inset-0 z-40" 
-                        onClick={() => setShowDropdown(false)}
+                        className="fixed inset-0 z-30" 
+                        onClick={() => {
+                            setShowDropdown(false)
+                            setShowSearch(false)
+                            setSearchResults([])
+                        }}
                     ></div>
                 )}
             </div>

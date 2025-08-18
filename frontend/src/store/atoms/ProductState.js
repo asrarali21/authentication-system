@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import axios from "axios";
 
 
@@ -16,4 +16,19 @@ export const productstate  = atom({
       }
         }
     })
+})
+
+export const singleProductState = selectorFamily({
+    key: 'singleProductState',
+    get: (productId) => async () => {
+        if (!productId) return null
+        
+        try {
+            const res = await axios.get(`http://localhost:8000/api/v1/products/singleproduct/${productId}`)
+            return res.data?.data ?? null
+        } catch (e) {
+            console.error('Single product fetch failed:', e)
+            return null
+        }
+    }
 })
