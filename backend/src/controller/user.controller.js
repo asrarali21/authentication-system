@@ -51,7 +51,7 @@ const loginUser = asyncHandler(async(req,res)=>{
         throw new ApiError(401 , "user doesnt exist")
     }
 
-    const isvalid = user.IsPasswordCorrect(password)
+    const isvalid = await user.IsPasswordCorrect(password)
 
     if (!isvalid) {
         throw new ApiError(401 , "incorrect password")
