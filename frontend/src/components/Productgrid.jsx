@@ -35,9 +35,8 @@ function Productgrid() {
                 </div>
                 <div className="p-6">
                   <h3 className="font-medium text-stone-900 mb-2">{item.name}</h3>
-                  <p className="text-stone-600 text-sm mb-4">High-fidelity audio experience</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-xl font-semibold text-stone-900">$299</span>
+                    <span className="text-xl font-semibold text-stone-900">{item.price}</span>
                     <Button size="sm" className="bg-stone-900 hover:bg-stone-800 text-white">
                       Add to Cart
                     </Button>

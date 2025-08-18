@@ -44,7 +44,7 @@ const setAuth = useSetRecoilState(authState)
     }, 1500)
  
     } catch (error) {
-    handleError(error)
+    handleError(error.response.data.message)
     console.log(error);
     
      }
