@@ -5,8 +5,10 @@ import { Card, CardContent } from '@/components/ui/card'
 import axios  from 'axios'
 import { Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useNavigate } from 'react-router-dom'
 
 function Electronics() {
+    const navigate = useNavigate()
      
    const allproducts  = useRecoilValue(productstate)
    const electronicsproduct = allproducts.filter(item => item.category.toLowerCase() === "electronics")
@@ -18,6 +20,7 @@ function Electronics() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {electronicsproduct.map((item) => (
                     <Card 
+                    onClick ={()=>navigate(`/singleProd/${item._id}`)}
                         key={item._id} 
                         className="group cursor-pointer border-0 shadow-sm hover:shadow-lg transition-all duration-300 bg-white max-w-sm"
                     >

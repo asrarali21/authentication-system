@@ -27,14 +27,13 @@ function Navbar() {
 
         const filteredproduct = allproducts.filter(item =>
             item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.description?.toLowerCase().includes(searchQuery.toLowerCase())
+            item.category.toLowerCase().includes(searchQuery.toLowerCase())
         )
         setSearchResults(filteredproduct.slice(0, 8))
     }, [searchQuery, allproducts])
 
     const handleSearchSelect = (item) => {
-        navigate(`/collection/${item._id}`)
+        navigate(`/singleProd/${item._id}`)
         setShowSearch(false)
         setSearchQuery('')
         setSearchResults([])
@@ -101,10 +100,11 @@ function Navbar() {
                                 </div>
 
                                 {/* Search Results Dropdown - Positioned absolutely */}
-                                {searchResults.length > 0 && (
+                                {searchResults.length > 0  &&(
                                     <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-96 bg-white border border-stone-200 rounded-lg shadow-lg z-[60] mt-2">
                                         <div className="max-h-64 overflow-y-auto">
                                             {searchResults.map((item) => (
+                                        
                                                 <div
                                                     key={item._id}
                                                     onClick={() => handleSearchSelect(item)}
@@ -174,7 +174,7 @@ function Navbar() {
                                             {auth.user?.email}
                                         </div>
                                     </div>
-                                    <ChevronDown className="h-4 w-4" />
+                                    <ChevronDown className="h-4 w-4 cursor-pointer" />
                                 </button>
                                 
                                 {showDropdown && (

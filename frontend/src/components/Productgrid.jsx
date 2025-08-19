@@ -4,7 +4,9 @@ import { Heart } from "lucide-react"
 import { Button } from './ui/button'
 import { useRecoilValue } from 'recoil'
 import { productstate } from '@/store/atoms/ProductState'
+import { useNavigate } from 'react-router-dom'
 function Productgrid() {
+  const navigate = useNavigate()
      
     const allproducts = useRecoilValue(productstate)
     console.log(allproducts);
@@ -21,8 +23,8 @@ function Productgrid() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredProducts.map((item)=>(
-                <Card className="group cursor-pointer border-0 shadow-sm hover:shadow-lg transition-all duration-300 bg-white">
-              <CardContent className="p-0">
+                <Card onClick ={()=>navigate(`/singleProd/${item._id}`)} className="group cursor-pointer border-0 shadow-sm hover:shadow-lg transition-all duration-300 bg-white" >
+              <CardContent  className="p-0">
                 <div className="aspect-square bg-stone-100 relative overflow-hidden">
                   <img
                     src={item.image[0]}
