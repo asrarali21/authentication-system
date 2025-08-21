@@ -8,7 +8,6 @@ const verifyadmin = asyncHandler (async(req , res , next)=>{
  
     const token = req.cookies?.accessToken || req.header("authorization")?.replace("Bearer ", "").trim();
 
-
       if (!token) {
           throw new ApiError(401 , "unauthorized access")
       }
